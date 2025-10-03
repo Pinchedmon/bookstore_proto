@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package orderpb;
+
+option go_package = "github.com/Pinchedmon/bookstore_proto/pb/orderpb";
+
+message Order {
+  string id = 1;
+  string user_id = 2;
+  repeated BookItem items = 3;
+  double total = 4;
+  string status = 5;
+}
+
+message BookItem {
+  string book_id = 1;
+  int32 quantity = 2;
+  double price = 3;
+}
+
+message CreateOrderRequest {
+  string user_id = 1;
+  repeated string book_ids = 2;
+}
+
+message CreateOrderResponse {
+  Order order = 1;
+}
+
+message GetOrdersRequest {
+  string user_id = 1;
+}
+
+message GetOrdersResponse {
+  repeated Order order = 1;
+}
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse);
+}
